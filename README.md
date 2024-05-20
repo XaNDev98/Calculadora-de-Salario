@@ -1,27 +1,30 @@
+<!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculo de Salário</title>
+    <title>Cálculo de Salário</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             padding: 20px;
-            background-color: #333; /* Cor de fundo mais escura no modo escuro */
-            color: #fff; /* Cor do texto no modo escuro */ 
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: #333;
+            color: #fff;
         }
 
         .form-group label {
-            color: #fff; /* Cor do texto das labels no modo escuro */
+            color: #fff;
         }
 
         .form-group input.form-control {
-            background-color: #666; /* Cor de fundo dos campos de entrada no modo escuro */
-            color: #007bff; /* Cor do texto nos campos de entrada no modo escuro */
+            background-color: #666;
+            color: #fff;
         }
 
-        .inss-ativo, .pension-ativo {
+        .inss-ativo,
+        .pension-ativo {
             background-color: lightblue;
         }
 
@@ -44,8 +47,8 @@
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 10px;
-            background-color: #666; /* Cor de fundo dos itens da lista no modo escuro */
-            color: #fff; /* Cor do texto nos itens da lista no modo escuro */
+            background-color: #666;
+            color: #fff;
         }
 
         .account-item input {
@@ -79,227 +82,446 @@
         }
 
         .light-mode {
-            background-color: #fff; /* Cor de fundo no modo claro */
-            color: #333; /* Cor do texto no modo claro */
+            background-color: #fff;
+            color: #333;
         }
 
         .light-mode .form-group label {
-            color: #333; /* Cor do texto das labels no modo claro */
+            color: #333;
         }
 
         .light-mode .form-group input.form-control {
-            background-color: #f0f0f0; /* Cor de fundo dos campos de entrada no modo claro */
-            color: #333; /* Cor do texto nos campos de entrada no modo claro */
+            background-color: #f0f0f0;
+            color: #333;
         }
 
         .light-mode .account-item {
-            background-color: #f0f0f0; /* Cor de fundo dos itens da lista no modo claro */
-            color: #333; /* Cor do texto nos itens da lista no modo claro */
-        } 
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
         footer {
-                position: fixed; /* Manterá o footer fixo na parte inferior da janela */
-                bottom: 0; /* Define a distância do footer em relação ao fundo da janela */
-                width: 100%; /* Define a largura do footer como 100% da largura da janela */
-                text-align: center; /* Centraliza o conteúdo do footer horizontalmente */
-                color: #fff; /* Cor do texto */
-                padding: 10px 0; /* Espaçamento interno do footer */
-}
- 
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            padding: 10px 0;
+        }
+
         .dark-mode .form-group input.form-control {
-        border: 1px solid #007bff; /* Adiciona uma borda azul nos campos de entrada no modo claro */ 
-        
-} 
- 
-body:not(.dark-mode) .form-group input.form-control {
-    border: 1px solid #007bff; /* Adiciona uma borda azul nos campos de entrada apenas no modo claro */
-}
+            border: 1px solid #007bff;
+        }
+
+        body:not(.dark-mode) .form-group input.form-control {
+            border: 1px solid #007bff;
+        }
+
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .settings-menu {
+            position: fixed;
+            top: 70px;
+            left: 40px;
+            background-color: #f8f9fa;
+            /* Cor de fundo do menu */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            color: #333;
+            /* Cor do texto do menu */
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Sombra do menu */
+        }
+
+        .settings-menu a {
+            color: #333;
+            /* Cor dos links do menu */
+            display: block;
+            padding: 8px 12px;
+            /* Espaçamento interno do link */
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .settings-menu a:hover {
+            background-color: #e9ecef;
+            /* Cor de fundo do link ao passar o mouse */
+            border-radius: 5px;
+            /* Borda arredondada ao passar o mouse */
+        }
+
+        .settings-menu h5 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #007bff;
+            /* Cor do título do menu */
+        }
+
+        .settings-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .settings-btn:hover {
+            background-color: #0056b3;
+            /* Cor de fundo do botão ao passar o mouse */
+        }
+
+        .modal-content {
+            color: #000;
+            /* Cor do texto do modal */
+            background-color: #fff;
+            /* Cor de fundo do modal */
+            border-radius: 10px;
+            /* Borda arredondada do modal */
+        }
+
+        .dark-mode .modal-content {
+            background-color: #444;
+            color: #fff;
+        }
+
+        .dark-mode .modal-content .form-group input {
+            background-color: #666;
+            color: #fff;
+        }
+
+        @media (max-width: 576px) {
+            .settings-btn {
+                top: 5px;
+                left: 10px; /* Alterado para 10px para mover mais à esquerda */
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            #darkModeBtn {
+                top: 5px;
+                right: 10px; /* Alterado para 10px para mover mais à esquerda */
+                width: 40px;
+                height: 40px;
+                font-size: 10px;
+            } 
+            @media only screen and (min-width: 768px) {
+            .container {
+                width: 50%; /* Ajuste conforme necessário */
+                margin: 0 auto; /* Centraliza o conteúdo */
+            }
+        }
+
+        /* Estilos para tela pequena (celulares e tablets) */
+        @media only screen and (max-width: 768px) {
+            .settings-btn {
+                top: 20px;
+                right: 10px; /* Alterado para 10px para mover mais à esquerda */
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        /* Estilos comuns para todas as telas */
+        .tela {
+            display: none;
+        }
+
+        .tela.ativa {
+            display: block;
+        }
+        }
     </style>
     <script>
-        function toggleINSS() {
-            const inssCheckbox = document.getElementById("inssCheckbox");
-            const salarioInput = document.getElementById("salario");
-            if (inssCheckbox.checked) {
-                salarioInput.classList.add("inss-ativo");
-            } else {
-                salarioInput.classList.remove("inss-ativo");
-            }
+function calcularINSS(salario) {
+    const faixasINSS = [
+        { limite: 1324.43, aliquota: 0.075 }, // 7.5%
+        { limite: 2210.73 - 1324.43, aliquota: 0.09 },  // 9%
+        { limite: 3307.19 - 2210.73, aliquota: 0.12 },  // 12%
+        { limite: 6433.57 - 3307.19, aliquota: 0.14 }   // 14%
+    ];
+
+    let inss = 0;
+    let salarioRestante = salario;
+
+    for (let i = 0; i < faixasINSS.length; i++) {
+        let faixa = faixasINSS[i];
+        if (salarioRestante <= faixa.limite) {
+            inss += salarioRestante * faixa.aliquota;
+            break;
+        } else {
+            inss += faixa.limite * faixa.aliquota;
+            salarioRestante -= faixa.limite;
         }
+    }
 
-        function togglePension() {
-            const pensionCheckbox = document.getElementById("pensionCheckbox");
-            const salarioInput = document.getElementById("salario");
-            if (pensionCheckbox.checked) {
-                salarioInput.classList.add("pension-ativo");
-            } else {
-                salarioInput.classList.remove("pension-ativo");
-            }
-        }
+    const aliquotaEfetiva = inss / salario;
+    return { inss, aliquotaEfetiva };
+}
 
-        function calcularINSS(salario) {
-            // Tabela progressiva do INSS para 2024 (exemplo)
-            const faixa1 = 1212.00;
-            const faixa2 = 2427.35;
-            const faixa3 = 3641.03;
-            const faixa4 = 7087.22;
 
-            let inss = 0;
 
-            if (salario <= faixa1) {
-                inss = salario * 0.075;
-            } else if (salario <= faixa2) {
-                inss = (faixa1 * 0.075) + ((salario - faixa1) * 0.09);
-            } else if (salario <= faixa3) {
-                inss = (faixa1 * 0.075) + ((faixa2 - faixa1) * 0.09) + ((salario - faixa2) * 0.12);
-            } else if (salario <= faixa4) {
-                inss = (faixa1 * 0.075) + ((faixa2 - faixa1) * 0.09) + ((faixa3 - faixa2) * 0.12) + ((salario - faixa3) * 0.14);
-            } else {
-                inss = (faixa1 * 0.075) + ((faixa2 - faixa1) * 0.09) + ((faixa3 - faixa2) * 0.12) + ((faixa4 - faixa3) * 0.14);
-            }
 
-            return inss;
-        }
 
-        function calcularPension(salario) {
-            // Exemplo de cálculo de pensão (ajuste conforme necessário)
-            return salario * 0.10; // 10% de desconto para pensão
-        }
 
-        function addAccount() {
-    const accountNameInput = document.getElementById("accountName");
-    const accountValueInput = document.getElementById("accountValue");
-    const accountName = accountNameInput.value.trim();
-    const accountValue = parseFloat(accountValueInput.value.trim());
+function calcularPension(salario) {
+const pensionPercentage = parseFloat(document.getElementById("pensionPercentage").value) / 100;
+return salario * pensionPercentage;
+}
 
-    if (accountName === "" || isNaN(accountValue)) {
-        alert("Por favor, insira um nome de conta e um valor válido.");
+function addAccount() {
+const accountNameInput = document.getElementById("accountName");
+const accountValueInput = document.getElementById("accountValue");
+const accountName = accountNameInput.value.trim();
+const accountValue = parseFloat(accountValueInput.value.trim());
+if (accountName === "" || isNaN(accountValue)) {
+    alert("Por favor, insira um nome de conta e um valor válido.");
+    return;
+}
+
+const accountList = document.getElementById("accountList");
+const accountItem = document.createElement("div");
+accountItem.className = "account-item";
+
+const accountText = document.createElement("span");
+
+const valueSpan = document.createElement("span");
+valueSpan.textContent = `R$ ${accountValue.toFixed(2)}`;
+accountText.appendChild(valueSpan);
+accountText.appendChild(document.createTextNode(" "));
+
+const nameSpan = document.createElement("span");
+nameSpan.textContent = `${accountName}:`;
+accountText.appendChild(nameSpan);
+accountText.appendChild(document.createTextNode(" "));
+
+if (accountName.toLowerCase().includes("ipva")) {
+    const carIcon = document.createElement("span");
+    carIcon.innerHTML = "&#128663;";
+    accountText.appendChild(carIcon);
+    accountText.appendChild(document.createTextNode(" "));
+}
+
+accountItem.appendChild(accountText);
+
+const deleteButton = document.createElement("button");
+deleteButton.innerHTML = "&#10060;";
+deleteButton.onclick = () => accountList.removeChild(accountItem);
+deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+
+accountItem.appendChild(deleteButton);
+accountList.appendChild(accountItem);
+
+accountNameInput.value = "";
+accountValueInput.value = "";
+}
+
+function calcularDescontos() {
+    const salarioInput = document.getElementById("salario");
+    let salario = parseFloat(salarioInput.value);
+
+    if (isNaN(salario)) {
+        alert("Por favor, insira um valor válido para o salário.");
         return;
     }
 
     const accountList = document.getElementById("accountList");
-    const accountItem = document.createElement("div");
-    accountItem.className = "account-item";
-
-    const accountText = document.createElement("span");
-
-    // Adiciona o valor da conta
-    const valueSpan = document.createElement("span");
-    valueSpan.textContent = `R$ ${accountValue.toFixed(2)}`;
-    accountText.appendChild(valueSpan);
-    accountText.appendChild(document.createTextNode(" ")); // Adiciona um espaço
-
-    // Adiciona o nome da conta
-    const nameSpan = document.createElement("span");
-    nameSpan.textContent = `${accountName}:`;
-    accountText.appendChild(nameSpan);
-    accountText.appendChild(document.createTextNode(" ")); // Adiciona um espaço
-
-    // Adiciona o ícone de carro se "IPVA" estiver presente no nome da conta
-    if (accountName.toLowerCase().includes("ipva")) {
-        const carIcon = document.createElement("span");
-        carIcon.innerHTML = "&#128663;"; // 🚗
-        accountText.appendChild(carIcon);
-        accountText.appendChild(document.createTextNode(" ")); // Adiciona um espaço
+    const accountItems = accountList.getElementsByClassName("account-item");
+    let totalContasPagar = 0;
+    for (let item of accountItems) {
+        let valorConta = parseFloat(item.textContent.split("R$")[1].trim());
+        totalContasPagar += valorConta;
     }
 
-    accountItem.appendChild(accountText);
+    const inssCheckbox = document.getElementById("inssCheckbox");
+    const pensionCheckbox = document.getElementById("pensionCheckbox");
 
-    const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "&#10060;"; // X
-    deleteButton.onclick = () => accountList.removeChild(accountItem);
-    deleteButton.classList.add("btn", "btn-danger", "btn-sm"); // Adiciona classes Bootstrap para o botão
+    const resultadoINSS = inssCheckbox.checked ? calcularINSS(salario) : { inss: 0, aliquotaEfetiva: 0 };
+    const descontoINSS = resultadoINSS.inss;
+    const aliquotaEfetivaINSS = resultadoINSS.aliquotaEfetiva * 100;
 
-    accountItem.appendChild(deleteButton);
-    accountList.appendChild(accountItem);
+    const descontoPension = pensionCheckbox.checked ? calcularPension(salario) : 0;
 
-    accountNameInput.value = "";
-    accountValueInput.value = "";
-}
-
-
-function calcularDescontos() {
-const salarioInput = document.getElementById("salario");
-let salario = parseFloat(salarioInput.value);
-
-if (isNaN(salario)) {
-    alert("Por favor, insira um valor válido para o salário.");
-    return;
-}
-
-// Calcular total das contas a pagar 
- 
-const accountList = document.getElementById("accountList");
-const accountItems = accountList.getElementsByClassName("account-item");
-let totalContasPagar = 0;
-for (let item of accountItems) {
-    let valorConta = parseFloat(item.textContent.split("R$")[1].trim());
-    totalContasPagar += valorConta;
-}
-
-const inssCheckbox = document.getElementById("inssCheckbox");
-const pensionCheckbox = document.getElementById("pensionCheckbox");
-
-let descontoINSS = 0;
-let descontoPension = 0;
-
-if (inssCheckbox.checked) {
-    descontoINSS = calcularINSS(salario);
-}
-
-if (pensionCheckbox.checked) {
-    descontoPension = calcularPension(salario);
-}
-
-const resultadoDiv = document.getElementById("resultado");
-resultadoDiv.innerHTML = `
-    <div class="resultado">
-        <p>Detalhes das Contas:</p>
-        <p>Contas a Pagar: R$ ${totalContasPagar.toFixed(2)}</p>
-        ${descontoINSS > 0 ? `<p>Desconto INSS: R$ ${descontoINSS.toFixed(2)}</p>` : ''}
-        ${descontoPension > 0 ? `<p>Desconto Pensão: R$ ${descontoPension.toFixed(2)}</p>` : ''}
-    </div>
-    <p>Salário após desconto: R$ ${(salario - totalContasPagar - descontoINSS - descontoPension).toFixed(2)}</p>`;
+    const resultadoDiv = document.getElementById("resultado");
+    resultadoDiv.innerHTML = `
+        <div class="resultado">
+            <p>Desconto INSS: R$ ${descontoINSS.toFixed(2)} (${aliquotaEfetivaINSS.toFixed(2)}%)</p>
+            <p>Desconto Pensão: R$ ${descontoPension.toFixed(2)} (${document.getElementById("pensionPercentage").value}%)</p>
+            <p>Total de Contas a Pagar: R$ ${totalContasPagar.toFixed(2)}</p>
+            <p>Salário após desconto: R$ ${(salario - totalContasPagar - descontoINSS - descontoPension).toFixed(2)}</p>
+        </div>`;
 }
 
 function toggleDarkMode() {
 const body = document.body;
 body.classList.toggle("dark-mode");
-body.classList.toggle("light-mode"); // Toggle light mode
+body.classList.toggle("light-mode");
 const darkModeBtn = document.getElementById("darkModeBtn");
 if (body.classList.contains("light-mode")) {
-    darkModeBtn.textContent = "Modo Escuro"; // Change button text to Dark Mode
+    darkModeBtn.textContent = "Modo Escuro";
 } else {
-    darkModeBtn.textContent = "Modo Claro"; // Change button text to Light Mode
+    darkModeBtn.textContent = "Modo Claro";
 }
 }
+
+function openSettingsMenu() {
+const settingsMenu = document.getElementById("settingsMenu");
+settingsMenu.style.display = settingsMenu.style.display === "block" ? "none" : "block";
+}
+
+function openSettingsModal() {
+const pensionPercentage = document.getElementById("pensionPercentage").value;
+document.getElementById("currentPensionPercentage").textContent = pensionPercentage;
+document.getElementById("newPensionPercentage").placeholder = "Alterar Porcentagem da Pensão";
+
+$('#settingsModal').modal('show');
+}
+
+function saveSettings() {
+const newPensionPercentage = document.getElementById("newPensionPercentage").value;
+if (newPensionPercentage.trim() === "" || isNaN(newPensionPercentage) || parseFloat(newPensionPercentage) <= 0) {
+    alert("Por favor, insira uma porcentagem válida.");
+    return;
+}
+document.getElementById("pensionPercentage").value = newPensionPercentage;
+$('#settingsModal').modal('hide');
+document.getElementById("settingsMenu").style.display = "none";
+}
+
+function openINSSRequirementsModal() {
+$('#inssRequirementsModal').modal('show');
+} 
+function openSettingsMenu() {
+            const settingsMenu = document.getElementById("settingsMenu");
+            settingsMenu.style.display = settingsMenu.style.display === "block" ? "none" : "block";
+        }
 </script>
 </head>
 <body class="dark-mode">
-    <div class="container">
-        <h1 class="text-center mb-4">Controle de Salario</h1>
-        <div class="form-group">
-            <label for="salario">Salário:</label>
-            <input type="text" id="salario" name="salario" class="form-control">
-            <div class="form-check">
-                <input type="checkbox" id="inssCheckbox" onclick="toggleINSS()" class="form-check-input">
-                <label for="inssCheckbox" class="form-check-label">INSS</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" id="pensionCheckbox" onclick="togglePension()" class="form-check-input">
-                <label for="pensionCheckbox" class="form-check-label">Pensão</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="accountName">Contas:</label>
-            <input type="text" id="accountName" name="accountName" class="form-control">
-            <label for="accountValue">Valor:</label>
-            <input type="text" id="accountValue" name="accountValue" class="form-control">
-            <button type="button" onclick="addAccount()" class="btn btn-primary">Adicionar</button>
-        </div>
-        <div id="accountList" class="account-list"></div>
-        <button type="button" onclick="calcularDescontos()" class="btn btn-success btn-lg btn-block">Processar Salário</button>
-        <div id="resultado"></div>
-        <button id="darkModeBtn" onclick="toggleDarkMode()" class="btn btn-secondary btn-sm mt-3 dark-mode-btn">Modo Claro</button>
+    <button class="settings-btn" onclick="openSettingsMenu()">
+        <i class="fas fa-cog"></i>
+    </button>
+    <div id="settingsMenu" class="settings-menu">
+        <a href="#" onclick="openSettingsModal()"><i class="fas fa-percent"></i> Porcentagem atual</a>
+        <a href="#" onclick="openINSSRequirementsModal()"><i class="fas fa-info-circle"></i> Requisitos INSS</a>
     </div>
-    <footer>Desenvolvido por Alexandre - Versão 1.0</footer>
-</body>
-</html>
+    <div class="modal fade" id="inssRequirementsModal" tabindex="-1" role="dialog" aria-labelledby="inssRequirementsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inssRequirementsModalLabel">Requisitos INSS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Faixa Salarial</th>
+                                <th>Alíquota</th 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Até R$ 1.324,43</td>
+                                    <td>7.5%</td>
+                                </tr>
+                                <tr>
+                                    <td>De R$ 1.324,44 até R$ 2.210,73</td>
+                                    <td>9%</td>
+                                </tr>
+                                <tr>
+                                    <td>De R$ 2.210,74 até R$ 3.107,19</td>
+                                    <td>12%</td>
+                                </tr>
+                                <tr>
+                                    <td>De R$ 3.107,20 até R$ 6.214,39</td>
+                                    <td>14%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    
+        <div class="container">
+            <h1 class="text-center mb-4">Controle de Salario </h1>
+            <div class="form-group">
+                <label for="salario">Salário:</label>
+                <input type="text" id="salario" name="salario" class="form-control">
+                <div class="form-check">
+                    <input type="checkbox" id="inssCheckbox" onclick="toggleINSS()" class="form-check-input">
+                    <label for="inssCheckbox" class="form-check-label">INSS</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="pensionCheckbox" onclick="togglePension()" class="form-check-input">
+                    <label for="pensionCheckbox" class="form-check-label">Pensão</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="accountName">Nome da Conta:</label>
+                <input type="text" id="accountName" name="accountName" class="form-control">
+                <label for="accountValue">Valor:</label>
+                <input type="text" id="accountValue" name="accountValue" class="form-control">
+                <button type="button" onclick="addAccount()" class="btn btn-primary">Adicionar</button>
+            </div>
+            <div id="accountList" class="account-list"></div>
+            <button type="button" onclick="calcularDescontos()" class="btn btn-success btn-lg btn-block">Processar Salário</button>
+            <div id="resultado"></div>
+            <button id="darkModeBtn" onclick="toggleDarkMode()" class="btn btn-secondary btn-sm mt-3 dark-mode-btn">Modo Claro</button>
+        </div>
+        <footer>Desenvolvido por Alexandre - Versão 1.0</footer>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="settingsModalLabel">Configurações</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="newPensionPercentage">Nova Porcentagem da Pensão (%):</label>
+                            <span id="currentPensionPercentage"></span>
+                            <input type="text" id="newPensionPercentage" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="saveSettings()">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="pensionPercentage" value="10"> <!-- Valor padrão da pensão (10%) -->
+    
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+    
+    </html>
+    
